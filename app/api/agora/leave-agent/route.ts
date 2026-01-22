@@ -4,7 +4,7 @@ import axios from "axios";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { agentId } = body;
+    const { agentId, credentials } = body;
 
     if (!agentId) {
       return NextResponse.json(
@@ -13,14 +13,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const APP_ID = process.env.AGORA_APP_ID;
-    const API_KEY = process.env.AGORA_API_KEY;
-    const API_SECRET = process.env.AGORA_API_SECRET;
+    // Use credentials from request body with fallback to environment variables
+    const APP_ID = credentials?.agora?.appId || process.env.AGORA_APP_ID;
+    const API_KEY = credentials?.agora?.apiKey || process.env.AGORA_API_KEY;
+    const API_SECRET = credentials?.agora?.apiSecret || process.env.AGORA_API_SECRET;
 
     if (!APP_ID || !API_KEY || !API_SECRET) {
       return NextResponse.json(
-        { error: "Missing Agora credentials" },
-        { status: 500 }
+        { error: "Missing Agora credentials. Please configure in Settings." },
+        { status: 400 }
       );
     }
 
@@ -58,7 +59,7 @@ export async function POST(request: NextRequest) {
       "[leave-agent] error - Status:",
       status,
       "URL:",
-      `https://api.agora.io/api/conversational-ai-agent/v2/projects/${APP_ID}/agents/${agentId}/leave`,
+      `https://api.agora.io/api/conversational-ai-agent/v2/projects/${body.credentials?.agora?.appId || process.env.AGORA_APP_ID}/agents/${agentId}/leave`,
       "Response:",
       JSON.stringify(data || err?.message, null, 2)
     );

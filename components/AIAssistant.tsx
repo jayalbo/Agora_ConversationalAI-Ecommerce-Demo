@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChatInterface } from "./ChatInterface";
+import { AllCredentials } from "@/lib/types/credentials";
 
 interface Product {
   id: string;
@@ -14,20 +15,34 @@ interface Product {
 
 interface AIAssistantProps {
   product: Product;
+  credentials: AllCredentials | null;
 }
 
-export function AIAssistant({ product }: AIAssistantProps) {
+export function AIAssistant({ product, credentials }: AIAssistantProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenChat = () => {
+    if (!credentials) {
+      alert("Please configure your credentials in Settings before using the AI Assistant.");
+      return;
+    }
+    setIsOpen(true);
+  };
 
   return (
     <>
       {/* Floating Button - Hidden when chat is open */}
       {!isOpen && (
         <button
-          onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition hover:scale-110 z-50 flex items-center justify-center group"
+          onClick={handleOpenChat}
+          disabled={!credentials}
+          className={`fixed bottom-6 right-6 p-4 rounded-full shadow-lg transition z-50 flex items-center justify-center group ${
+            credentials
+              ? "bg-blue-600 hover:bg-blue-700 text-white hover:scale-110"
+              : "bg-gray-400 text-gray-200 cursor-not-allowed"
+          }`}
           aria-label="Open AI Voice Assistant"
-          title="Talk to AI Assistant"
+          title={credentials ? "Talk to AI Assistant" : "Configure credentials in Settings first"}
         >
           {/* Microphone icon with sound waves */}
           <div className="relative">
@@ -58,7 +73,11 @@ export function AIAssistant({ product }: AIAssistantProps) {
 
       {/* Chat Interface Modal */}
       {isOpen && (
-        <ChatInterface product={product} onClose={() => setIsOpen(false)} />
+        <ChatInterface
+          product={product}
+          credentials={credentials}
+          onClose={() => setIsOpen(false)}
+        />
       )}
     </>
   );

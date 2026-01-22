@@ -12,6 +12,7 @@ import {
   type ITranscriptHelperItem,
   type IChatMessageText,
 } from "@/lib/conversational-ai-api/type";
+import { AllCredentials } from "@/lib/types/credentials";
 
 interface Product {
   id: string;
@@ -30,10 +31,11 @@ interface ChatMessage {
 
 interface ChatInterfaceProps {
   product: Product;
+  credentials: AllCredentials | null;
   onClose: () => void;
 }
 
-export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
+export function ChatInterface({ product, credentials, onClose }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -224,6 +226,7 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userId: Math.floor(Math.random() * 100000),
+            credentials,
           }),
         });
 
@@ -245,6 +248,7 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
             userId: initData.uid,
             token: initData.token,
             productId: product.id, // Pass product ID so AI knows which product to discuss
+            credentials,
           }),
         });
 
@@ -284,7 +288,7 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
     };
 
     initializeAgora();
-  }, [product.id]);
+  }, [product.id, credentials]);
 
   // Get available microphones using Agora SDK
   useEffect(() => {
@@ -363,10 +367,6 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
 
         // Subscribe to channel messages (required before agent starts)
         await convoAPI.subscribeMessage(agoraConfig.channel);
-        console.log(
-          "[ChatInterface] Successfully subscribed to channel:",
-          agoraConfig.channel
-        );
 
         // Listen for transcript updates (both user and agent)
         // Use the EventHelper's on method properly
@@ -374,15 +374,6 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
           transcripts: ITranscriptHelperItem<any>[]
         ) => {
           if (!isMounted) return;
-
-          console.log("[ChatInterface] Transcript updated:", transcripts);
-
-          // Convert transcripts to chat messages
-          // Log the full structure to debug
-          console.log(
-            "[ChatInterface] Full transcript structure:",
-            JSON.stringify(transcripts, null, 2)
-          );
 
           // Get user's UID for comparison
           const userRtcUid = agoraConfig?.uid?.toString() || "";
@@ -404,10 +395,6 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
                 (itemAny.status && String(itemAny.status) === "final");
 
               if (!hasText) {
-                console.log(
-                  "[ChatInterface] Filtering out item with no text:",
-                  item
-                );
                 return false;
               }
 
@@ -458,10 +445,6 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
               // We'll handle deduplication in the message update logic below
               // Only filter out if it's neither user nor agent
               if (!isUserMessage && !isAgentMessage) {
-                console.log(
-                  "[ChatInterface] Filtering out unknown message type:",
-                  item
-                );
                 return false;
               }
 
@@ -509,20 +492,8 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
                   itemAny.data?.speaker?.toLowerCase().includes("assistant") ||
                   (item.metadata && "quiet" in item.metadata)); // Agent transcriptions have "quiet" field
 
-              console.log("[ChatInterface] Transcript item:", {
-                uid: item.uid,
-                agentUserId: itemAny.agentUserId,
-                publisher: itemAny.publisher,
-                itemUid,
-                text: text.substring(0, 50),
-                isUserMessage,
-                isAgent,
-                metadata: item.metadata,
-                object: itemAny.object,
-                data: itemAny.data,
-                metadataObject: item.metadata?.object,
-                fullItem: item, // Log full item for debugging
-              });
+              // Debug: Uncomment if needed for ASR debugging
+              // console.log("[ChatInterface] Transcript item:", { itemUid, text: text.substring(0, 50), isUserMessage, isAgent });
               return {
                 role: isAgent ? "assistant" : "user",
                 content: text,
@@ -537,10 +508,8 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
               };
             });
 
-          console.log(
-            "[ChatInterface] New messages from transcripts:",
-            newMessages
-          );
+          // Debug: Uncomment if needed
+          // console.log("[ChatInterface] New messages from transcripts:", newMessages);
 
           // Check if we have any agent messages to clear waiting state
           const hasAgentMessage = newMessages.some(
@@ -604,23 +573,8 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
                   // If it's a loading message, mark it for deletion
                   if (isLoading) {
                     loadingKeysToDelete.push(existingKey);
-                    console.log(
-                      "[ChatInterface] Found loading user message to delete:",
-                      {
-                        loadingKey: existingKey,
-                        transcriptContent: msg.content.substring(0, 50),
-                      }
-                    );
                   } else if (exactContentMatch && !isLoading) {
                     // Exact duplicate (non-loading) - skip adding this transcript
-                    console.log(
-                      "[ChatInterface] Found existing user message with exact same content, skipping transcript:",
-                      {
-                        existingKey,
-                        existingContent: existingMsg.content.substring(0, 50),
-                        transcriptContent: msg.content.substring(0, 50),
-                      }
-                    );
                     shouldSkip = true;
                     break; // Found duplicate, exit loop
                   }
@@ -629,10 +583,6 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
                 // Delete ALL loading messages found (do this after the loop to avoid modifying while iterating)
                 loadingKeysToDelete.forEach((key) => {
                   messagesMap.delete(key);
-                  console.log(
-                    "[ChatInterface] Deleted loading user message:",
-                    key
-                  );
                 });
 
                 if (shouldSkip) {
@@ -662,17 +612,6 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
 
                   // Always update - for agents it's real-time, for users we want final versions
                   messagesMap.set(key, msg);
-                  console.log(
-                    `[ChatInterface] ${
-                      isAgentMsg ? "Updating" : "Replacing"
-                    } message with same turn_id and role:`,
-                    {
-                      turnId,
-                      role: msg.role,
-                      oldContent: existingMsg.content.substring(0, 50),
-                      newContent: msg.content.substring(0, 50),
-                    }
-                  );
                 } else {
                   // Different role - this shouldn't happen with the new key format, but log it just in case
                   console.warn(
@@ -692,12 +631,6 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
               } else {
                 // New message with this key (loading message already deleted if found)
                 messagesMap.set(key, msg);
-                console.log("[ChatInterface] Adding new message:", {
-                  key,
-                  role: msg.role,
-                  content: msg.content.substring(0, 50),
-                  turnId,
-                });
               }
             });
 
@@ -845,7 +778,7 @@ export function ChatInterface({ product, onClose }: ChatInterfaceProps) {
         await fetch("/api/agora/leave-agent", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ agentId }),
+          body: JSON.stringify({ agentId, credentials }),
         });
       } catch (e) {
         // Ignore errors when leaving agent

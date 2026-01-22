@@ -10,7 +10,7 @@ import { fetchProduct } from "@/lib/product";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { channel, userId, token, productId } = body;
+    const { channel, userId, token, productId, credentials } = body;
 
     console.log(`[POST] /api/agora/start-agent`);
     console.log(
@@ -92,23 +92,16 @@ IMPORTANT RULES:
 9. NEVER use emojis, symbols, or special characters that could break text-to-speech - use words to express emotions and reactions
 10. Remember: You're Effie - be yourself, be fun, and make shopping enjoyable!`;
 
-    const APP_ID = process.env.AGORA_APP_ID;
-    const API_KEY = process.env.AGORA_API_KEY;
-    const API_SECRET = process.env.AGORA_API_SECRET;
+    // Use credentials from request body with fallback to environment variables
+    const APP_ID = credentials?.agora?.appId || process.env.AGORA_APP_ID;
+    const API_KEY = credentials?.agora?.apiKey || process.env.AGORA_API_KEY;
+    const API_SECRET = credentials?.agora?.apiSecret || process.env.AGORA_API_SECRET;
+    const APP_CERTIFICATE = credentials?.agora?.appCertificate || process.env.AGORA_APP_CERTIFICATE;
 
-    if (!APP_ID || !API_KEY || !API_SECRET) {
+    if (!APP_ID || !API_KEY || !API_SECRET || !APP_CERTIFICATE) {
       return NextResponse.json(
-        { error: "Missing Agora credentials" },
-        { status: 500 }
-      );
-    }
-
-    // Generate token for agent (UID 1000)
-    const APP_CERTIFICATE = process.env.AGORA_APP_CERTIFICATE;
-    if (!APP_CERTIFICATE) {
-      return NextResponse.json(
-        { error: "Missing APP_CERTIFICATE" },
-        { status: 500 }
+        { error: "Missing Agora credentials. Please configure in Settings." },
+        { status: 400 }
       );
     }
 
@@ -154,9 +147,26 @@ IMPORTANT RULES:
 
     const auth = Buffer.from(`${API_KEY}:${API_SECRET}`).toString("base64");
 
-    // Get HeyGen configuration
-    const heygenApiToken = process.env.HEYGEN_API_TOKEN || "";
-    const heygenAvatarId = process.env.HEYGEN_AVATAR_ID || "";
+    // Get HeyGen configuration (optional)
+    const heygenApiToken = credentials?.avatar?.heygenApiToken || process.env.HEYGEN_API_TOKEN || "";
+    const heygenAvatarId = credentials?.avatar?.heygenAvatarId || process.env.HEYGEN_AVATAR_ID || "";
+
+    // Get LLM configuration (required)
+    const LLM_URL = credentials?.llm?.url || process.env.LLM_URL || "https://api.openai.com/v1/chat/completions";
+    const LLM_API_KEY = credentials?.llm?.apiKey || process.env.LLM_API_KEY;
+    const LLM_MODEL = credentials?.llm?.model || process.env.LLM_MODEL;
+
+    // Get TTS configuration (required)
+    const TTS_API_KEY = credentials?.tts?.apiKey || process.env.TTS_API_KEY;
+    const TTS_REGION = credentials?.tts?.region || process.env.TTS_REGION || "eastus";
+
+    // Validate required credentials
+    if (!LLM_API_KEY || !LLM_MODEL || !TTS_API_KEY) {
+      return NextResponse.json(
+        { error: "Missing LLM or TTS credentials. Please configure in Settings." },
+        { status: 400 }
+      );
+    }
 
     const payload = {
       name: `ecommerce_ai_agent_${Date.now()}_${Math.random()
@@ -166,6 +176,7 @@ IMPORTANT RULES:
         channel: channel,
         token: agentToken,
         agent_rtc_uid: "1000",
+        agent_rtm_uid: "1000",
         remote_rtc_uids: [`${Number(userId)}`],
         idle_timeout: 120,
         advanced_features: {
@@ -175,11 +186,12 @@ IMPORTANT RULES:
           data_channel: "rtm", // Enable Signaling as the data transmission channel (required for transcripts)
           audio_scenario: "chorus",
           enable_aivad: true,
+          enable_error_message: true,
+          enable_metrics: true,
         },
         llm: {
-          url:
-            process.env.LLM_URL || "https://api.openai.com/v1/chat/completions",
-          api_key: process.env.LLM_API_KEY || "",
+          url: LLM_URL,
+          api_key: LLM_API_KEY,
           system_messages: [
             {
               role: "system",
@@ -190,21 +202,22 @@ IMPORTANT RULES:
             "Hello! I'm here to help you with this product. Ask me anything about features, reviews, or specifications!",
           failure_message:
             "I'm sorry, I can only assist with questions related to this product. Could you please ask about our product?",
-          max_history: 10,
+          max_history: 30,
+          input_modalities: ["text"],
+          output_modalities: ["text"],
           params: {
-            model: process.env.LLM_MODEL || "gpt-4o-mini",
+            model: LLM_MODEL,
           },
         },
         asr: {
-          vendor: "agora",
+          vendor: "ares",
           language: "en-US",
-          params: {},
         },
         tts: {
           vendor: "microsoft",
           params: {
-            key: process.env.TTS_API_KEY || "",
-            region: process.env.TTS_REGION || "eastus",
+            key: TTS_API_KEY,
+            region: TTS_REGION,
             voice_name: "en-US-AriaNeural",
             sample_rate: 24000,
             rate: "1.3",
@@ -219,6 +232,8 @@ IMPORTANT RULES:
             agora_uid: avatarRtcUid.toString(),
             agora_token: avatarToken,
             avatar_id: heygenAvatarId,
+            disable_idle_timeout: false,
+            activity_idle_timeout: 60,
           },
         },
       },

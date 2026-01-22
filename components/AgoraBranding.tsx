@@ -46,11 +46,11 @@ export function AgoraLogo({ className = "h-4" }: { className?: string }) {
 export function AgoraBranding({ variant = "header" }: { variant?: "header" | "badge" | "footer" }) {
   if (variant === "badge") {
     return (
-      <div className="flex items-center gap-1.5 px-2 py-1 bg-white/80 backdrop-blur-sm rounded-lg border border-gray-200">
-        <div className="text-[#0093E9]">
+      <div className="flex items-center gap-1.5 px-2 py-1 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="text-[#0093E9] dark:text-[#34b7ee]">
           <AgoraLogo className="h-3" />
         </div>
-        <span className="text-[10px] text-gray-600 font-medium">
+        <span className="text-[10px] text-gray-600 dark:text-gray-300 font-medium">
           Convo AI
         </span>
       </div>
@@ -59,17 +59,17 @@ export function AgoraBranding({ variant = "header" }: { variant?: "header" | "ba
 
   if (variant === "footer") {
     return (
-      <div className="flex items-center justify-center gap-2 py-3 border-t border-gray-200 bg-gray-50">
-        <span className="text-xs text-gray-500">Powered by</span>
+      <div className="flex items-center justify-center gap-2 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+        <span className="text-xs text-gray-500 dark:text-gray-400">Powered by</span>
         <a
           href="https://www.agora.io"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center text-[#0093E9] hover:text-[#34b7ee] transition-colors duration-200"
+          className="flex items-center text-[#0093E9] dark:text-[#34b7ee] hover:text-[#34b7ee] dark:hover:text-[#5ac8f5] transition-colors duration-200"
         >
           <AgoraLogo className="h-4" />
         </a>
-        <span className="text-xs text-gray-600 font-medium">Conversational AI</span>
+        <span className="text-xs text-gray-600 dark:text-gray-300 font-medium">Conversational AI</span>
       </div>
     );
   }
@@ -80,12 +80,12 @@ export function AgoraBranding({ variant = "header" }: { variant?: "header" | "ba
       href="https://www.agora.io"
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-2 text-[#0093E9] hover:text-[#34b7ee] transition-colors duration-200"
+      className="flex items-center gap-2 text-[#0093E9] dark:text-[#34b7ee] hover:text-[#34b7ee] dark:hover:text-[#5ac8f5] transition-colors duration-200"
     >
       <AgoraLogo className="h-5" />
       <div className="flex flex-col">
-        <span className="text-xs font-semibold text-gray-900">Conversational AI</span>
-        <span className="text-[10px] text-gray-500">Powered by Agora</span>
+        <span className="text-xs font-semibold text-gray-900 dark:text-white">Conversational AI</span>
+        <span className="text-[10px] text-gray-500 dark:text-gray-400">Powered by Agora</span>
       </div>
     </a>
   );

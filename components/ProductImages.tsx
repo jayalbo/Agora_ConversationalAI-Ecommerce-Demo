@@ -10,8 +10,8 @@ export function ProductImages({ images }: ProductImagesProps) {
   const [selectedImage, setSelectedImage] = useState(0);
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
-      <div className="relative aspect-square mb-6 bg-gray-50 rounded-lg overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 p-6">
+      <div className="relative aspect-square mb-6 bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden">
         <img
           src={images[selectedImage]}
           alt="Product"
@@ -24,9 +24,9 @@ export function ProductImages({ images }: ProductImagesProps) {
             key={idx}
             onClick={() => setSelectedImage(idx)}
             className={`flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden border-2 transition-all ${
-              selectedImage === idx 
-                ? 'border-blue-600 ring-4 ring-blue-100 shadow-md scale-105' 
-                : 'border-gray-200 hover:border-gray-400 hover:shadow-sm'
+              selectedImage === idx
+                ? 'border-blue-600 dark:border-blue-400 ring-4 ring-blue-100 dark:ring-blue-900/50 shadow-md scale-105'
+                : 'border-gray-200 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-sm'
             }`}
           >
             <img
