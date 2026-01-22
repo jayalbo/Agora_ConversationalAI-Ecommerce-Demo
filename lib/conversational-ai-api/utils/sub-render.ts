@@ -334,11 +334,6 @@ export class CovSubRenderController {
 
   private _mutateChatHistory() {
     // console.debug(CONSOLE_LOG_PREFIX, 'Mutate chatHistory', this.chatHistory)
-    console.log("[CovSubRenderController] _mutateChatHistory called:", {
-      pts: this._pts,
-      chatHistoryLength: this.chatHistory.length,
-      chatHistory: this.chatHistory,
-    });
     this.callMessagePrint(
       ELoggerType.debug,
       '>>> onChatHistoryUpdated',
@@ -532,16 +527,6 @@ export class CovSubRenderController {
     // For user messages, use the publisher UID
     const finalUid = isAgentMessage ? "1000" : `${uid}`;
 
-    console.log("[CovSubRenderController] handleTextMessage:", {
-      uid,
-      finalUid,
-      isAgentMessage,
-      messageObject: message.object,
-      turn_id,
-      text,
-      stream_id,
-      message,
-    });
 
     const targetChatHistoryItem = this.chatHistory.find(
       (item) => item.turn_id === turn_id && item.stream_id === stream_id
@@ -555,13 +540,6 @@ export class CovSubRenderController {
         'new item',
         message
       )
-      console.log("[CovSubRenderController] Adding new chat history item:", {
-        turn_id,
-        uid: finalUid,
-        text,
-        stream_id,
-        isAgentMessage,
-      });
       // For agent messages, show intermediate messages too (for real-time updates)
       // For user messages, only show final to avoid duplicates
       if (isAgentMessage) {
@@ -595,12 +573,6 @@ export class CovSubRenderController {
           })
           this._mutateChatHistory()
         } else {
-          console.log("[CovSubRenderController] Skipping non-final user message:", {
-            turn_id,
-            text,
-            isFinal,
-            message
-          });
           return; // Don't add non-final user messages to chat history
         }
       }
@@ -622,13 +594,6 @@ export class CovSubRenderController {
         if (targetChatHistoryItem.uid !== finalUid) {
           targetChatHistoryItem.uid = finalUid;
         }
-        console.log("[CovSubRenderController] Updating existing chat history item:", {
-          turn_id,
-          text: text.substring(0, 50),
-          isAgentMessage,
-          isFinal,
-          status: targetChatHistoryItem.status
-        });
         this.callMessagePrint(
           ELoggerType.debug,
           `[Text Mode]`,
@@ -637,12 +602,6 @@ export class CovSubRenderController {
         )
         this._mutateChatHistory()
       } else {
-        console.log("[CovSubRenderController] Skipping non-final user message update:", {
-          turn_id,
-          text,
-          isFinal,
-          message
-        });
       }
     }
   }
@@ -1039,15 +998,6 @@ export class CovSubRenderController {
       publisher: RTMEvents.MessageEvent['publisher']
     }
   ) {
-    console.log("[CovSubRenderController] handleMessage called:", {
-      message,
-      publisher: options.publisher,
-      messageObject: message?.object,
-      messageType: (message as any).type,
-      messageCustomType: (message as any).customType,
-      hasText: !!(message.text || (message as any).content),
-      text: message.text || (message as any).content,
-    });
     const messageObject = message?.object
     if (!Object.values(EMessageType).includes(messageObject)) {
       console.warn("[CovSubRenderController] Unknown message type:", messageObject, message);
@@ -1062,7 +1012,6 @@ export class CovSubRenderController {
         return
       }
       // If it has text but unknown object type, treat it as a transcription
-      console.log("[CovSubRenderController] Unknown object type but has text, treating as transcription");
     }
 
     const isAgentMessage = message.object === EMessageType.AGENT_TRANSCRIPTION

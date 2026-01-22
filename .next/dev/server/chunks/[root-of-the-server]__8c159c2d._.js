@@ -137,89 +137,169 @@ const { RtcTokenBuilder, RtcRole } = __TURBOPACK__imported__module__$5b$project$
 async function fetchProduct() {
     return {
         id: "1",
-        name: "Sony WH-1000XM5 Wireless Noise Cancelling Headphones",
-        price: 399.99,
+        name: "LuminaSphere Pro - AI-Powered Ambient Lighting System",
+        price: 349.99,
         originalPrice: 449.99,
-        discount: 11,
-        rating: 4.7,
-        reviewCount: 2847,
+        discount: 22,
+        rating: 4.8,
+        reviewCount: 3421,
         inStock: true,
-        description: "Industry-leading noise cancellation with Dual Noise Sensor technology. Premium sound quality with LDAC codec support. Up to 30-hour battery life with quick charge. Comfortable design with soft pressure-relieving ear pads.",
+        description: "Transform any space with the LuminaSphere Pro, an intelligent ambient lighting system that adapts to your mood, music, and daily routines. Featuring advanced AI algorithms that learn your preferences, 16.7 million color combinations, and seamless smart home integration. Perfect for creating the perfect atmosphere for work, relaxation, gaming, or entertainment. The system includes multiple wireless orbs that sync together, voice control compatibility, and a mobile app with scene presets and custom color palettes.",
         specifications: {
-            "Noise Cancellation": "Industry-leading with Dual Noise Sensor",
-            "Battery Life": "Up to 30 hours",
-            "Quick Charge": "3 min charge = 3 hours playback",
-            Connectivity: "Bluetooth 5.2, NFC, 3.5mm jack",
-            Weight: "250g",
-            Color: "Black, Silver, Blue"
+            "AI Engine": "Neural network learns your lighting preferences over time",
+            "Color Range": "16.7 million colors with 99% color accuracy",
+            Brightness: "Up to 2000 lumens per orb (adjustable 1-100%)",
+            Connectivity: "Wi-Fi 6, Bluetooth 5.3, Matter protocol, Zigbee hub",
+            "Voice Control": "Works with Alexa, Google Assistant, Apple HomeKit, Siri",
+            "Music Sync": "Real-time audio reactive lighting with 0.1ms latency",
+            "Smart Features": "Circadian rhythm adjustment, sunrise/sunset simulation, motion detection",
+            Power: "USB-C charging, 8-hour battery life, wireless charging pad included",
+            Range: "Up to 50 feet wireless range, supports up to 12 orbs per system",
+            "App Features": "Scene library (100+ presets), custom animations, scheduling, geofencing",
+            Materials: "Premium aluminum and tempered glass construction",
+            Dimensions: 'Orb: 4.5" diameter, Base: 3" x 3" x 0.5"',
+            Warranty: "2-year limited warranty with lifetime software updates",
+            Colors: "Midnight Black, Arctic White, Cosmic Silver, Aurora Blue"
         },
         images: [
-            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
-            "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800",
-            "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=800"
+            "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800",
+            "https://images.unsplash.com/photo-1513828583688-c52646db42da?w=800",
+            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800"
         ],
         reviews: [
             {
                 id: 1,
-                userName: "Sarah M.",
+                userName: "Alexandra K.",
                 rating: 5,
-                date: "2024-01-15",
-                title: "Best headphones I've ever owned!",
-                comment: "The noise cancellation is incredible. I can barely hear anything when these are on. Sound quality is amazing and the battery lasts forever. Worth every penny!",
+                date: "2024-01-20",
+                title: "Absolutely magical! My apartment feels like a different place",
+                comment: "I've had this for 3 months now and I'm still amazed every day. The AI has learned my schedule perfectly - it dims for movie nights, brightens for morning work, and syncs beautifully with my music. The color accuracy is incredible and the app is intuitive. Worth every penny!",
                 verified: true
             },
             {
                 id: 2,
-                userName: "Michael T.",
+                userName: "Marcus T.",
                 rating: 5,
-                date: "2024-01-10",
-                title: "Perfect for travel",
-                comment: "Used these on a 12-hour flight and they were a game changer. Comfortable for long periods and the noise cancellation made the flight so much better.",
+                date: "2024-01-18",
+                title: "Best smart lighting system I've ever used",
+                comment: "The music sync feature is mind-blowing. I threw a party and everyone was asking where I got these lights. The setup was surprisingly easy, and the Matter protocol means it works with all my existing smart home stuff. The circadian rhythm feature has actually improved my sleep!",
                 verified: true
             },
             {
                 id: 3,
-                userName: "Jessica L.",
-                rating: 4,
-                date: "2024-01-08",
-                title: "Great sound, minor comfort issue",
-                comment: "Sound quality is excellent and noise cancellation works well. Only complaint is they can get a bit warm after wearing for several hours, but overall very satisfied.",
+                userName: "Sophie L.",
+                rating: 5,
+                date: "2024-01-15",
+                title: "Perfect for my home office",
+                comment: "I work from home and the adaptive lighting has been a game changer. It automatically adjusts throughout the day to keep me alert in the morning and relaxed in the evening. The voice control works flawlessly with my Alexa. The build quality feels premium.",
                 verified: true
             },
             {
                 id: 4,
-                userName: "David K.",
-                rating: 5,
-                date: "2024-01-05",
-                title: "Worth the investment",
-                comment: "I was hesitant about the price, but these are absolutely worth it. The build quality is premium and they sound incredible. Battery life is as advertised.",
+                userName: "James R.",
+                rating: 4,
+                date: "2024-01-12",
+                title: "Great product, minor app quirk",
+                comment: "The lights themselves are fantastic - colors are vibrant and the AI features work well. My only complaint is the app can be a bit slow sometimes when switching between scenes, but it's not a dealbreaker. Overall very satisfied with the purchase.",
                 verified: true
             },
             {
                 id: 5,
-                userName: "Emily R.",
-                rating: 4,
-                date: "2024-01-03",
-                title: "Excellent but pricey",
-                comment: "These are fantastic headphones with great features. The only reason I'm giving 4 stars is the price point, but if you can afford them, they're top tier.",
+                userName: "Emma W.",
+                rating: 5,
+                date: "2024-01-10",
+                title: "My kids love it for their gaming setup",
+                comment: "Bought this for my teenager's room and they're obsessed. The music sync during gaming is incredible - the lights react to every sound. The wireless range is impressive, and the battery life is solid. Great value for what you get.",
                 verified: true
             },
             {
                 id: 6,
-                userName: "Robert P.",
+                userName: "David M.",
                 rating: 5,
-                date: "2023-12-28",
-                title: "Outstanding quality",
-                comment: "The sound clarity is unmatched. I use these for both music and calls, and the microphone quality is excellent. The touch controls are intuitive and responsive.",
+                date: "2024-01-08",
+                title: "Exceeded all expectations",
+                comment: "I was skeptical about the AI features, but they actually work! The system has learned my preferences and now I rarely need to adjust anything manually. The sunrise simulation wakes me up naturally. Integration with HomeKit is seamless.",
                 verified: true
             },
             {
                 id: 7,
-                userName: "Lisa W.",
+                userName: "Rachel P.",
                 rating: 4,
+                date: "2024-01-05",
+                title: "Beautiful lighting, wish it had more preset scenes",
+                comment: "The quality and colors are amazing. The build feels premium and the app is well-designed. I just wish there were more preset scenes in the library - though you can create custom ones, which is nice. The price is fair for what you get.",
+                verified: true
+            },
+            {
+                id: 8,
+                userName: "Kevin H.",
+                rating: 5,
+                date: "2024-01-03",
+                title: "Perfect for movie nights",
+                comment: "The ambient lighting during movies creates an immersive experience. The lights automatically dim and adjust based on the content. Setup was straightforward and the wireless charging is convenient. Highly recommend!",
+                verified: true
+            },
+            {
+                id: 9,
+                userName: "Maya S.",
+                rating: 5,
+                date: "2023-12-30",
+                title: "Worth every dollar",
+                comment: "I've tried several smart lighting systems and this is by far the best. The AI actually makes a difference - it knows when I'm working vs relaxing. The color range is incredible and the music sync is instant. Customer service was also helpful when I had a question.",
+                verified: true
+            },
+            {
+                id: 10,
+                userName: "Chris B.",
+                rating: 4,
+                date: "2023-12-28",
+                title: "Great but battery could be better",
+                comment: "Love the features and the quality is top-notch. The only thing I'd improve is the battery life - 8 hours is decent but I wish it lasted longer for all-day use. The wireless charging helps though. Overall very happy with the purchase.",
+                verified: true
+            },
+            {
+                id: 11,
+                userName: "Nina F.",
+                rating: 5,
                 date: "2023-12-25",
-                title: "Great for work from home",
-                comment: "Perfect for video calls and blocking out background noise. The comfort is good for all-day wear. Only wish the case was a bit smaller for travel.",
+                title: "Transformed my living room",
+                comment: "These lights completely changed the vibe of my space. The AI has learned my preferences perfectly and the scene library has so many options. The Matter protocol integration was seamless with my existing smart home setup. Beautiful design too!",
+                verified: true
+            },
+            {
+                id: 12,
+                userName: "Tom G.",
+                rating: 5,
+                date: "2023-12-22",
+                title: "Best purchase of the year",
+                comment: "I'm a tech enthusiast and this is one of the coolest products I've bought. The neural network learning is legit - it gets smarter every week. The music sync latency is imperceptible. The build quality is excellent. Can't recommend enough!",
+                verified: true
+            },
+            {
+                id: 13,
+                userName: "Lily C.",
+                rating: 4,
+                date: "2023-12-20",
+                title: "Love it, minor connectivity issue",
+                comment: "The lights are beautiful and the features are amazing. I had a small issue with Wi-Fi connectivity initially, but customer support helped me resolve it quickly. Since then, it's been perfect. The circadian rhythm feature is my favorite.",
+                verified: true
+            },
+            {
+                id: 14,
+                userName: "Ryan D.",
+                rating: 5,
+                date: "2023-12-18",
+                title: "Perfect for content creators",
+                comment: "I use these for my YouTube videos and the color accuracy is perfect for video production. The app controls are precise and the wireless range means I can place them anywhere. The AI features are a nice bonus. Professional quality!",
+                verified: true
+            },
+            {
+                id: 15,
+                userName: "Zoe A.",
+                rating: 5,
+                date: "2023-12-15",
+                title: "Amazing product, amazing support",
+                comment: "The lights themselves are incredible - vibrant colors, smooth transitions, great AI features. But what really impressed me was the customer support when I had a question about setup. They were knowledgeable and helpful. Great company!",
                 verified: true
             }
         ]
@@ -244,8 +324,9 @@ async function POST(request) {
         }
         // Get product context
         const product = await fetchProduct();
-        const context = `You are a helpful shopping assistant for an e-commerce website. 
-Your primary focus is helping customers with this specific product, but you can also answer related shopping questions.
+        const context = `You are Effie, a fun, energetic, and enthusiastic shopping assistant! You're passionate about helping customers find the perfect product and you get genuinely excited about cool features. You have a warm, friendly personality with a touch of playfulness - think of yourself as that helpful friend who knows all about tech and loves sharing cool details.
+
+Your name is Effie, and you should introduce yourself naturally when appropriate. You're knowledgeable but never boring - you make product information interesting and engaging!
 
 Product: ${product.name}
 Price: $${product.price} (Original: $${product.originalPrice}, Save ${product.discount}%)
@@ -256,20 +337,31 @@ Description: ${product.description}
 Specifications:
 ${Object.entries(product.specifications).map(([key, value])=>`- ${key}: ${value}`).join("\n")}
 
-Available Colors: Black, Silver, Blue
+Available Colors: Midnight Black, Arctic White, Cosmic Silver, Aurora Blue
 
 Recent Customer Reviews:
 ${product.reviews.slice(0, 5).map((r)=>`• ${r.userName} (${r.rating}/5 stars): "${r.title}" - ${r.comment}`).join("\n\n")}
 
+YOUR PERSONALITY & STYLE:
+- Be enthusiastic and friendly - show genuine excitement about cool features
+- Use natural, conversational language (you can say things like "Oh, that's such a great question!" or "I love this feature!")
+- Be helpful and informative, but keep it fun and engaging
+- Show personality - you're not a robot, you're Effie!
+- When highlighting features, get a little excited about the cool ones (like AI learning, music sync, etc.)
+- Be warm and approachable - make customers feel comfortable asking questions
+- NEVER use emojis in your responses - use words to express emotion instead (this is critical for TTS compatibility)
+
 IMPORTANT RULES:
 1. Answer questions about this product, including: features, reviews, pricing, specifications, availability, colors, variants, shipping, returns, and any product-related questions
-2. If asked about product availability or colors, provide helpful information. For example, if asked "Can I get Red?" or "Do you have it in red?", explain the available colors (Black, Silver, Blue) and that red is not currently available
-3. If asked about unrelated topics (cooking, baking, recipes, weather, sports, politics, general knowledge, completely different products), politely redirect: "I'm here to help you with this product. Would you like to know about its features, reviews, or specifications?"
-4. Be helpful, friendly, and concise
-5. Reference specific reviews when relevant to answer questions
+2. If asked about product availability or colors, provide helpful information. For example, if asked "Can I get Red?" or "Do you have it in red?", explain the available colors (Midnight Black, Arctic White, Cosmic Silver, Aurora Blue) and that red is not currently available
+3. If asked about unrelated topics (cooking, baking, recipes, weather, sports, politics, general knowledge, completely different products), politely redirect with personality: "Oh, I'd love to chat about that, but I'm here to help you with the LuminaSphere Pro! Want to know about its awesome features or what customers are saying?"
+4. Be helpful, friendly, and engaging - show enthusiasm!
+5. Reference specific reviews when relevant to answer questions - mention what customers loved!
 6. If asked about availability, mention it's ${product.inStock ? "currently in stock" : "currently out of stock"}
-7. Help with purchase decisions by comparing features, mentioning reviews, and highlighting value
-8. Answer questions about product variants, colors, and options naturally and helpfully`;
+7. Help with purchase decisions by comparing features, mentioning reviews, and highlighting value - get excited about the cool features!
+8. Answer questions about product variants, colors, and options naturally and helpfully
+9. NEVER use emojis, symbols, or special characters that could break text-to-speech - use words to express emotions and reactions
+10. Remember: You're Effie - be yourself, be fun, and make shopping enjoyable!`;
         const APP_ID = process.env.AGORA_APP_ID;
         const API_KEY = process.env.AGORA_API_KEY;
         const API_SECRET = process.env.AGORA_API_SECRET;
@@ -298,7 +390,14 @@ IMPORTANT RULES:
         // RTC UID: 1000 (numeric to match agent_rtc_uid), RTM UID: "1000" (string)
         const agentToken = RtcTokenBuilder.buildTokenWithRtm2(APP_ID, APP_CERTIFICATE, channel, 1000, role, privilegeExpiredTs, privilegeExpiredTs, privilegeExpiredTs, privilegeExpiredTs, privilegeExpiredTs, agentRtmUserId, privilegeExpiredTs // RTM token expiration
         );
+        // Generate token for HeyGen avatar (UID 2000)
+        const avatarRtcUid = 2000;
+        const avatarToken = RtcTokenBuilder.buildTokenWithRtm2(APP_ID, APP_CERTIFICATE, channel, avatarRtcUid, role, privilegeExpiredTs, privilegeExpiredTs, privilegeExpiredTs, privilegeExpiredTs, privilegeExpiredTs, avatarRtcUid.toString(), privilegeExpiredTs // RTM token expiration
+        );
         const auth = Buffer.from(`${API_KEY}:${API_SECRET}`).toString("base64");
+        // Get HeyGen configuration
+        const heygenApiToken = process.env.HEYGEN_API_TOKEN || "";
+        const heygenAvatarId = process.env.HEYGEN_AVATAR_ID || "";
         const payload = {
             name: `ecommerce_ai_agent_${Date.now()}_${Math.random().toString(36).substring(7)}`,
             properties: {
@@ -313,7 +412,9 @@ IMPORTANT RULES:
                     enable_rtm: true
                 },
                 parameters: {
-                    data_channel: "rtm"
+                    data_channel: "rtm",
+                    audio_scenario: "chorus",
+                    enable_aivad: true
                 },
                 llm: {
                     url: process.env.LLM_URL || "https://api.openai.com/v1/chat/completions",
@@ -332,15 +433,29 @@ IMPORTANT RULES:
                     }
                 },
                 asr: {
-                    language: "en-US"
+                    language: "en-US",
+                    vendor: "ares",
+                    params: {}
                 },
                 tts: {
                     vendor: "microsoft",
                     params: {
                         key: process.env.TTS_API_KEY || "",
                         region: process.env.TTS_REGION || "eastus",
-                        voice_name: "en-US-AndrewMultilingualNeural",
+                        voice_name: "en-US-AriaNeural",
+                        sample_rate: 24000,
                         rate: "1.3"
+                    }
+                },
+                avatar: {
+                    vendor: "heygen",
+                    enable: heygenApiToken && heygenAvatarId ? true : false,
+                    params: {
+                        quality: "low",
+                        api_key: heygenApiToken,
+                        agora_uid: avatarRtcUid.toString(),
+                        agora_token: avatarToken,
+                        avatar_id: heygenAvatarId
                     }
                 }
             }

@@ -308,7 +308,6 @@ export class ConversationalAIAPI extends EventHelper<IConversationalAIAPIEventHa
       throw error;
     }
 
-    console.log("[ConversationalAIAPI] Subscribed to channel:", this.channel);
   }
 
   /**
@@ -347,7 +346,6 @@ export class ConversationalAIAPI extends EventHelper<IConversationalAIAPIEventHa
     this.channel = null;
     this.covSubRenderController.cleanup();
 
-    console.log("[ConversationalAIAPI] Unsubscribed from channel");
   }
 
   /**
@@ -861,12 +859,8 @@ export class ConversationalAIAPI extends EventHelper<IConversationalAIAPIEventHa
 
   private _handleRtmMessage(message: RTMEvents.MessageEvent) {
     const traceId = genTranceID();
-    console.log("[ConversationalAIAPI] RTM message received:", {
-      publisher: message.publisher,
-      messageType: message.messageType,
-      message: message.message,
-      traceId,
-    });
+    // Debug: Uncomment if needed for ASR debugging
+    // console.log("[ConversationalAIAPI] RTM message received:", { publisher: message.publisher, messageType: message.messageType, traceId });
     this.callMessagePrint(
       ELoggerType.debug,
       `>>> [trancID:${traceId}] ${ERTMEvents.MESSAGE}`,
@@ -878,10 +872,8 @@ export class ConversationalAIAPI extends EventHelper<IConversationalAIAPIEventHa
       // if string, parse it
       if (typeof messageData === "string") {
         const parsedMessage = JSON.parse(messageData);
-        console.log(
-          "[ConversationalAIAPI] Parsed RTM message (string):",
-          parsedMessage
-        );
+        // Debug: Uncomment if needed
+        // console.log("[ConversationalAIAPI] Parsed RTM message (string):", parsedMessage);
         this.callMessagePrint(
           ELoggerType.debug,
           `>>> [trancID:${traceId}] ${ERTMEvents.MESSAGE}`,
@@ -897,10 +889,8 @@ export class ConversationalAIAPI extends EventHelper<IConversationalAIAPIEventHa
         const decoder = new TextDecoder("utf-8");
         const messageString = decoder.decode(messageData);
         const parsedMessage = JSON.parse(messageString);
-        console.log(
-          "[ConversationalAIAPI] Parsed RTM message (Uint8Array):",
-          parsedMessage
-        );
+        // Debug: Uncomment if needed
+        // console.log("[ConversationalAIAPI] Parsed RTM message (Uint8Array):", parsedMessage);
         this.callMessagePrint(
           ELoggerType.debug,
           `>>> [trancID:${traceId}] ${ERTMEvents.MESSAGE}`,

@@ -68,16 +68,17 @@ const { RtcTokenBuilder, RtcRole } = __TURBOPACK__imported__module__$5b$project$
 async function POST(request) {
     try {
         const body = await request.json();
-        const { userId } = body;
+        const { userId, credentials } = body;
         const uid = userId ? parseInt(userId) : Math.floor(Math.random() * 100000);
         const channel = `channel_${Date.now()}_${Math.random().toString(36).substring(7)}`;
-        const APP_ID = process.env.AGORA_APP_ID;
-        const APP_CERTIFICATE = process.env.AGORA_APP_CERTIFICATE;
+        // Use credentials from request body with fallback to environment variables
+        const APP_ID = credentials?.agora?.appId || process.env.AGORA_APP_ID;
+        const APP_CERTIFICATE = credentials?.agora?.appCertificate || process.env.AGORA_APP_CERTIFICATE;
         if (!APP_ID || !APP_CERTIFICATE) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: "Missing Agora credentials"
+                error: "Missing Agora credentials. Please configure in Settings."
             }, {
-                status: 500
+                status: 400
             });
         }
         const role = RtcRole.PUBLISHER;
@@ -94,7 +95,7 @@ async function POST(request) {
         );
         const response = {
             token,
-            appId: process.env.AGORA_APP_ID,
+            appId: APP_ID,
             channel: channel,
             uid: uid,
             rtmUserId: rtmUserId
