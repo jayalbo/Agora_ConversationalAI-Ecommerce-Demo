@@ -58,8 +58,6 @@ export async function POST(request: NextRequest) {
     console.error(
       "[leave-agent] error - Status:",
       status,
-      "URL:",
-      `https://api.agora.io/api/conversational-ai-agent/v2/projects/${body.credentials?.agora?.appId || process.env.AGORA_APP_ID}/agents/${agentId}/leave`,
       "Response:",
       JSON.stringify(data || err?.message, null, 2)
     );
