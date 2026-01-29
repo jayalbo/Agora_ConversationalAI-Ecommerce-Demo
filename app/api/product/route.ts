@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchProduct, getAllProducts } from '@/lib/product';
+import { fetchProduct } from '@/lib/product';
 
 // GET /api/product?productId=1
 // Simple API route to fetch product data
