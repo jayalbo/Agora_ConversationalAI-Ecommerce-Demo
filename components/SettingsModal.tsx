@@ -161,26 +161,26 @@ export default function SettingsModal({
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    API Key *
+                    Customer ID *
                   </label>
                   <input
                     type="password"
                     value={formData.agora.apiKey}
                     onChange={(e) => handleInputChange('agora', 'apiKey', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-                    placeholder="Enter Agora API Key"
+                    placeholder="Enter Agora Customer ID"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    API Secret *
+                    Customer Secret *
                   </label>
                   <input
                     type="password"
                     value={formData.agora.apiSecret}
                     onChange={(e) => handleInputChange('agora', 'apiSecret', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-                    placeholder="Enter Agora API Secret"
+                    placeholder="Enter Agora Customer Secret"
                   />
                 </div>
               </div>
