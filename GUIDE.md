@@ -25,8 +25,6 @@ A voice-enabled shopping assistant that:
 
 The result is an AI that can answer questions like "What do customers say about the battery life?" by synthesizing actual reviews, or explain technical specifications in plain language, or help customers compare options—all through natural voice conversation.
 
-![Architecture Diagram Placeholder - Add your own diagram showing: Browser ↔ Next.js API ↔ Agora Services (RTC/RTM/ConvoAI)]
-
 ## Architecture Overview
 
 The system connects four key pieces:
@@ -253,7 +251,7 @@ RULES:
 - `enable_rtm: true` + `data_channel: "rtm"` - Required for receiving transcripts. Without this, you only get audio.
 - `rate: "1.3"` - Slightly faster TTS sounds more natural in conversation.
 
-## Step 3: Connect the Browser to Agora RTC
+## Step 3: Connect the Browser to Agora
 
 The `useAgora` hook manages the audio connection:
 
@@ -396,10 +394,9 @@ useEffect(() => {
 **How transcripts flow**:
 
 1. User speaks → Agora ASR converts to text
-2. ConvoAI sends `user.transcription` via RTM
+2. ConvoAI sends text to LLM
 3. LLM generates response
-4. ConvoAI sends `assistant.transcription` via RTM
-5. TTS converts response to speech (plays through RTC)
+4. ConvoAI sends response as speec as well as assistant.transcription via RTM
 
 The `TRANSCRIPT_UPDATED` event fires for both intermediate (in-progress) and final transcriptions. The `turn_id` field lets you track and replace messages as they complete.
 
@@ -521,7 +518,6 @@ The avatar joins the RTC channel and streams video that the frontend renders wit
 
 **Agent not responding?**
 
-- Check that `ENABLE_AUDIO_PTS_METADATA` is set before creating the RTC client
 - Verify the LLM API key and model are correct
 - Look for errors in the browser console and Next.js server logs
 
@@ -570,18 +566,16 @@ The Agora Conversational AI platform handles the hard parts—real-time audio, s
 
 ## Live Demo
 
-🖥 [Check the live demo](#)
+🖥 [Check the live demo](https://agora-conversational-ai-ecommerce-d.vercel.app/)
 
 ## Resources
 
-- [Full code on Github](https://github.com/jayalbo/Agora_ConversationalAI-Ecommerce-Demo)
+- [Full code on Github](https://github.com/AgoraIO-Community/Agora_ConversationalAI-Ecommerce-Demo)
 - [Agora Conversational AI Docs](https://docs.agora.io/en/conversational-ai/overview/product-overview)
 - [Agora RTC SDK Reference](https://docs.agora.io/en/video-calling/overview/product-overview)
 - [Agora Signaling SDK Reference](https://docs.agora.io/en/signaling/overview/product-overview)
-- [Azure TTS Voice Gallery](https://speech.microsoft.com/portal/voicegallery)
-- [OpenAI API Reference](https://platform.openai.com/docs/api-reference)
 - [Agora Community Discord](https://discord.gg/agora)
 
 ---
 
-_Built with Agora Conversational AI, Next.js, and React._
+\_Built with Agora Conversational AI.

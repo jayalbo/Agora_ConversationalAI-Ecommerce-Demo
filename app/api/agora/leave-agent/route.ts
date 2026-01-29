@@ -9,19 +9,20 @@ export async function POST(request: NextRequest) {
     if (!agentId) {
       return NextResponse.json(
         { error: "agentId is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // Use credentials from request body with fallback to environment variables
     const APP_ID = credentials?.agora?.appId || process.env.AGORA_APP_ID;
     const API_KEY = credentials?.agora?.apiKey || process.env.AGORA_API_KEY;
-    const API_SECRET = credentials?.agora?.apiSecret || process.env.AGORA_API_SECRET;
+    const API_SECRET =
+      credentials?.agora?.apiSecret || process.env.AGORA_API_SECRET;
 
     if (!APP_ID || !API_KEY || !API_SECRET) {
       return NextResponse.json(
         { error: "Missing Agora credentials. Please configure in Settings." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -38,7 +39,7 @@ export async function POST(request: NextRequest) {
           Authorization: `Basic ${auth}`,
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     console.log(`[leave-agent] Successfully left agent: ${agentId}`);
@@ -59,11 +60,11 @@ export async function POST(request: NextRequest) {
       "[leave-agent] error - Status:",
       status,
       "Response:",
-      JSON.stringify(data || err?.message, null, 2)
+      JSON.stringify(data || err?.message, null, 2),
     );
     return NextResponse.json(
       { error: message, detail: data || err?.message, status: status },
-      { status: status || 500 }
+      { status: status || 500 },
     );
   }
 }
